@@ -1,0 +1,53 @@
+-- Insertar cliente
+CREATE PROCEDURE sp_InsertarCliente
+    @nombre NVARCHAR(100),
+    @dni NVARCHAR(20),
+    @email NVARCHAR(100)
+AS
+BEGIN
+    INSERT INTO Cliente (nombre, dni, email)
+    VALUES (@nombre, @dni, @email)
+END
+
+-- Consultar todos los clientes
+CREATE PROCEDURE sp_ConsultarClientes
+AS
+BEGIN
+    SELECT * FROM Cliente
+END
+
+-- Insertar reserva
+CREATE PROCEDURE sp_InsertarReserva
+    @fecha_entrada DATE,
+    @fecha_salida DATE,
+    @estado NVARCHAR(20),
+    @id_cliente INT,
+    @id_habitacion INT
+AS
+BEGIN
+    INSERT INTO Reserva (fecha_entrada, fecha_salida, estado, id_cliente, id_habitacion)
+    VALUES (@fecha_entrada, @fecha_salida, @estado, @id_cliente, @id_habitacion)
+END
+
+-- Consultar todas las reservas
+CREATE PROCEDURE sp_ConsultarReservas
+AS
+BEGIN
+    SELECT * FROM Reserva
+END
+
+-- Clientes
+EXEC sp_InsertarCliente 'Carlos Ramírez', '12345678', 'carlos@example.com';
+EXEC sp_InsertarCliente 'Lucía Torres', '87654321', 'lucia@example.com';
+-- (Agrega 5 más similares)
+
+-- Habitaciones (sin procedimiento)
+INSERT INTO Habitacion (tipo, precio, disponibilidad)
+VALUES ('Simple', 100, 1), ('Doble', 180, 1), ('Suite', 300, 1);
+
+-- Reservas
+EXEC sp_InsertarReserva '2025-06-01', '2025-06-05', 'Pendiente', 1, 1;
+EXEC sp_InsertarReserva '2025-06-10', '2025-06-15', 'Pendiente', 2, 2;
+-- (Agrega 5 más similares)
+EXEC sp_ConsultarClientes;
+EXEC sp_ConsultarReservas;
