@@ -1,0 +1,31 @@
+CREATE DATABASE SistemaHospedaje;
+GO
+
+USE SistemaHospedaje;
+GO
+
+CREATE TABLE Cliente (
+    id_cliente INT PRIMARY KEY IDENTITY,
+    nombre NVARCHAR(100),
+    dni NVARCHAR(20),
+    email NVARCHAR(100)
+);
+
+CREATE TABLE Habitacion (
+    id_habitacion INT PRIMARY KEY IDENTITY,
+    tipo NVARCHAR(50),
+    precio DECIMAL(10,2),
+    disponibilidad BIT
+);
+
+CREATE TABLE Reserva (
+    id_reserva INT PRIMARY KEY IDENTITY,
+    fecha_creacion DATETIME DEFAULT GETDATE(),
+    estado NVARCHAR(20),
+    fecha_entrada DATE,
+    fecha_salida DATE,
+    id_cliente INT,
+    id_habitacion INT,
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
+    FOREIGN KEY (id_habitacion) REFERENCES Habitacion(id_habitacion)
+);
